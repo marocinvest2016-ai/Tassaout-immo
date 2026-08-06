@@ -1,5 +1,19 @@
 # Agence immobilière Tassaout Immo — Kelaat Sraghna
+# 🏢 Agence Immobilière Tassaout Immo — Kelaat Sraghna
 
+المنصة الرسمية لإدارة المحفظة العقارية الشاملة بقلعة السراغنة والناحية.
+
+## 📊 القطاعات العقارية المدارة
+1. **🌾 العقاري الفلاحي (Terrains Agricoles / Fermes):** أراضي سقوية وبور، وضيعات فلاحية مجهزة.
+2. **🏭 العقاري الصناعي والتجاري (Industriel / Commercial):** مستودعات، ورشات، ومناطق صناعية.
+3. **💼 العقاري المهني (Professionnel / Bureaux):** مكاتب، عيادات، ومحلات تجارية بوسط المدينة.
+4. **🏗️ العقاري الاستثماري (Investissement / Résidentiel):** بقع أرضية، عمارات، وتجزئات سكنية (تجزئة الهدى...).
+
+---
+
+## 📞 التواصل المباشر والخط الساخن
+* **الهاتف / واتساب الرسمي:** `0691897126`
+* **رابط الواتساب المباشر:** [اضغط هنا للتواصل الفوري](https://wa.me/212691897126)
 Tassaout Immo est une agence immobilière basée à Kelaat Sraghna spécialisée dans la vente de terrains agricoles, fermes fonctionnelles, lots de construction, maisons et immeubles. Nous accompagnons acheteurs et vendeurs pour des transactions claires et sécurisées.
 
 ## Nos services
