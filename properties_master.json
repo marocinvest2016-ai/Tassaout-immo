@@ -1,0 +1,53 @@
+{
+  "agency": "Tassaout Immo",
+  "city": "Kelaat Sraghna",
+  "phone": "0691897126",
+  "categories": [
+    "العقاري الفلاحي (Agricole / Fermes)",
+    "العقاري الصناعي والتجاري (Industriel / Commercial)",
+    "العقاري المهني (Professionnel / Bureaux)",
+    "العقاري الاستثماري (Investissement / Résidentiel)"
+  ],
+  "listings": [
+    {
+      "ref": "AGR-01",
+      "title": "فيرمة فلاحية مغروسة بالزيتون مع بئر ومجهزة",
+      "category": "العقاري الفلاحي",
+      "surface": "5 هكتار",
+      "location": "قلعة السراغنة - الناحية",
+      "price": "1,800,000 MAD",
+      "legal_status": "محفي (تثبيت ملكية)",
+      "whatsapp": "https://wa.me/212691897126?text=السلام%20عليكم،%20مهتم%20بالعقار%20AGR-01"
+    },
+    {
+      "ref": "IND-01",
+      "title": "قطعة أرضية مخصصة للمستودعات والمصانع",
+      "category": "العقاري الصناعي والتجاري",
+      "surface": "3000 م²",
+      "location": "المنطقة الصناعية قلعة السراغنة",
+      "price": "2,200,000 MAD",
+      "legal_status": "محفي تجاري",
+      "whatsapp": "https://wa.me/212691897126?text=السلام%20عليكم،%20مهتم%20بالعقار%20IND-01"
+    },
+    {
+      "ref": "PRO-01",
+      "title": "مكتب تجاري مهني في الطابق الأول",
+      "category": "العقاري المهني",
+      "surface": "120 م²",
+      "location": "شارع محمد الخامس",
+      "price": "750,000 MAD",
+      "legal_status": "محفي",
+      "whatsapp": "https://wa.me/212691897126?text=السلام%20عليكم،%20مهتم%20بالعقار%20PRO-01"
+    },
+    {
+      "ref": "INV-01",
+      "title": "بقعة أرضية استثمارية لبناء عمارة ر+4",
+      "category": "العقاري الاستثماري",
+      "surface": "400 م²",
+      "location": "تجزئة الهدى",
+      "price": "1,100,000 MAD",
+      "legal_status": "محفي رخصة صالحة",
+      "whatsapp": "https://wa.me/212691897126?text=السلام%20عليكم،%20مهتم%20بالعقار%20INV-01"
+    }
+  ]
+}
