@@ -1,13 +1,29 @@
-<div style="margin-bottom: 20px; text-align: center;">
-    <select id="categoryFilter" onchange="filterListings()" style="width: 100%; max-width: 400px; padding: 12px; border-radius: 8px; background-color: #0f3d24; color: #4ade80; border: 1px solid #14532d; font-size: 16px; font-weight: bold; outline: none; cursor: pointer;">
-        <option value="all" style="background-color: #062314; color: #f8fafc;">جميع القطاعات</option>
-        <option value="العقاري الفلاحي" style="background-color: #062314; color: #f8fafc;">العقاري الفلاحي</option>
-        <option value="العقاري الصناعي والتجاري" style="background-color: #062314; color: #f8fafc;">العقاري الصناعي والتجاري</option>
-        <option value="العقاري المهني" style="background-color: #062314; color: #f8fafc;">العقاري المهني</option>
-        <option value="العقاري الاستثماري" style="background-color: #062314; color: #f8fafc;">العقاري الاستثماري</option>
-        <option value="بيع مواد البناء" style="background-color: #062314; color: #f8fafc;">بيع مواد البناء</option>
-        <option value="مكتب الدراسات والاستثمار والهندسة الصناعية والميكانيكية" style="background-color: #062314; color: #f8fafc;">مكتب الدراسات والاستثمار والهندسة الصناعية والميكانيكية</option>
-        <option value="الهندسة الرقمية والتصوير الفوتوغرافي الاحترافي" style="background-color: #062314; color: #f8fafc;">الهندسة الرقمية والتصوير الفوتوغرافي الاحترافي</option>
-        <option value="التسويق العقاري والتجاري" style="background-color: #062314; color: #f8fafc;">التسويق العقاري والتجاري</option>
+<!-- قائمة القطاعات والبوابات -->
+<div style="text-align: center; margin: 15px 0;">
+    <select id="categoryFilter" onchange="filterListings()" style="width: 95%; max-width: 500px; padding: 14px; border-radius: 8px; background-color: #062314; color: #4ade80; border: 2px solid #22c55e; font-size: 16px; font-weight: bold; outline: none; cursor: pointer;">
+        <option value="all">جميع القطاعات</option>
+        <option value="العقاري الفلاحي">العقاري الفلاحي</option>
+        <option value="العقاري الصناعي والتجاري">العقاري الصناعي والتجاري</option>
+        <option value="العقاري المهني">العقاري المهني</option>
+        <option value="العقاري الاستثماري">العقاري الاستثماري</option>
+        <option value="بيع مواد البناء">بيع مواد البناء</option>
+        <option value="مكتب الدراسات والاستثمار">مكتب الدراسات والاستثمار والهندسة الصناعية والميكانيكية</option>
+        <option value="الهندسة الرقمية والتصوير">الهندسة الرقمية والتصوير الفوتوغرافي الاحترافي</option>
+        <option value="التسويق العقاري والتجاري">التسويق العقاري والتجاري</option>
     </select>
 </div>
+
+<script>
+function filterListings() {
+    var selectedValue = document.getElementById("categoryFilter").value;
+    var cards = document.querySelectorAll(".prop-card");
+    
+    cards.forEach(function(card) {
+        if (selectedValue === "all" || card.innerHTML.includes(selectedValue)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+</script>
