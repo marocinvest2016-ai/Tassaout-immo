@@ -1,83 +1,93 @@
 import streamlit as st
 import json
 import os
-import glob
+import base64
+import pandas as pd
+from PIL import Image, ImageEnhance
+from openai import OpenAI
+from supabase import create_client
 
-st.set_page_config(page_title="Tassaout Immo & Media", page_icon="🏢", layout="wide")
+# ==========================================
+# 1. إعدادات الهوية والبنية الأساسية
+# ==========================================
+st.set_page_config(page_title="TASSAOUT OMEGA OS", page_icon="👑", layout="wide")
 
-# التصميم الموحد
+# التصميم البصري (CSS)
 st.markdown("""
     <style>
-    .main { background-color: #062314; color: #f8fafc; }
-    .prop-card { padding: 20px; border-radius: 12px; border: 1px solid #14532d; margin-bottom: 20px; background-color: #0f3d24; }
-    .badge-cat { background-color: #166534; color: #4ade80; padding: 4px 10px; border-radius: 6px; font-size: 12px; }
+    .main { background-color: #062314; }
+    .prop-card { padding: 20px; border-radius: 12px; border: 1px solid #22c55e; background-color: #0f3d24; margin-bottom: 20px; }
+    .stButton>button { background-color: #22c55e; color: #000; font-weight: bold; border-radius: 8px; }
     </style>
 """, unsafe_allow_html=True)
 
-# التأكد من وجود مجلد listings وإنشاء ملف تجريبي تلقائياً لمنع ظهور الخطأ
-if not os.path.exists("listings"):
-    os.makedirs("listings")
-    sample_data = {
-        "title": "أرض فلاحية أو محل تجاري تجريبي",
-        "category": "العقاري الفلاحي",
-        "description": "هذا عقار تجريبي تم إنشاؤه تلقائياً لعمل التطبيق بنجاح.",
-        "price": "1,200,000 درهم"
-    }
-    with open("listings/sample_prop.json", "w", encoding="utf-8") as f:
-        json.dump(sample_data, f, ensure_ascii=False, indent=4)
+# تهيئة المفاتيح (Secrets)
+try:
+    openai_api_key = st.secrets["OPENAI_API_KEY"]
+    supabase_url = st.secrets["SUPABASE_URL"]
+    supabase_key = st.secrets["SUPABASE_KEY"]
+    client = OpenAI(api_key=openai_api_key)
+    supabase = create_client(supabase_url, supabase_key)
+except Exception as e:
+    st.error(f"خطأ في إعدادات Secrets: {e}")
+    st.stop()
 
-# دالة تحميل الخدمات
-def load_services():
-    try:
-        with open("services_tassaout_sraghna.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {"services": []}
+# ==========================================
+# 2. القائمة الجانبية الموحدة (Navigation)
+# ==========================================
+st.sidebar.title("👑 OMEGA OS Dashboard")
+app_mode = st.sidebar.radio("اختر القسم:", [
+    "🏠 المنصة الرئيسية والعروض",
+    "🤖 الوكيل الذكي الفائق",
+    "✨ استوديو توليد الصور",
+    "📋 إدارة صفقات Supabase",
+    "➕ إضافة إعلان يدوي",
+    "🛠️ خدماتنا"
+])
 
-# التبديل بين الصفحات
-if 'nav_mode' not in st.session_state: 
-    st.session_state.nav_mode = "عقارات"
+# ==========================================
+# 3. محتوى الأقسام
+# ==========================================
 
-col1, col2, col3 = st.columns(3)
-if col1.button("العقارات", use_container_width=True): 
-    st.session_state.nav_mode = "عقارات"
-if col2.button("الخدمات", use_container_width=True): 
-    st.session_state.nav_mode = "خدمات"
-if col3.button("اتصل بنا", use_container_width=True): 
-    st.session_state.nav_mode = "اتصال"
+# القسم 1: المنصة الرئيسية
+if app_mode == "🏠 المنصة الرئيسية والعروض":
+    st.title("🏢 Tassaout Immo & Media")
+    # (هنا يمكنك وضع كود عرض الإعلانات المحلية التي كانت في الملف الأول)
+    st.info("مرحباً بك في لوحة التحكم المركزية.")
 
-# محتوى الصفحات
-if st.session_state.nav_mode == "عقارات":
-    st.title("المحفظة العقارية")
-    st.write("استعراض العقارات المتاحة:")
+# القسم 2: الوكيل الذكي
+elif app_mode == "🤖 الوكيل الذكي الفائق":
+    st.title("🤖 Super AI Agent")
+    if "messages" not in st.session_state: st.session_state.messages = []
     
-    listing_files = glob.glob("listings/*.json")
-    if listing_files:
-        for file_path in listing_files:
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    prop = json.load(f)
-                    st.markdown(f"""
-                    <div class="prop-card">
-                        <h3>{prop.get('title', 'عقار')}</h3>
-                        <span class="badge-cat">{prop.get('category', 'عام')}</span>
-                        <p>{prop.get('description', '')}</p>
-                        <p><b>السعر:</b> {prop.get('price', 'غير محدد')}</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-            except Exception as e:
-                pass
-    else:
-        st.info("لا توجد ملفات عقارات حالياً.")
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]): st.write(msg["content"])
+        
+    if prompt := st.chat_input("اطلب برومبت أو محتوى..."):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        resp = client.chat.completions.create(model="gpt-4o-mini", messages=[{"role": "user", "content": prompt}])
+        reply = resp.choices[0].message.content
+        st.session_state.messages.append({"role": "assistant", "content": reply})
+        st.rerun()
 
-elif st.session_state.nav_mode == "خدمات":
-    st.title("خدماتنا الرقمية والهندسية")
-    data = load_services()
-    for s in data.get("services", []):
-        with st.expander(f"{s.get('الخدمة', 'خدمة')}"):
-            st.write(s.get('الوصف', ''))
+# القسم 3: استوديو الصور
+elif app_mode == "✨ استوديو توليد الصور":
+    st.title("🎨 AI Visual Studio")
+    prompt = st.text_input("وصف الصورة:")
+    if st.button("توليد"):
+        res = client.images.generate(model="dall-e-3", prompt=prompt, n=1, size="1024x1024")
+        st.image(res.data[0].url)
 
-elif st.session_state.nav_mode == "اتصال":
-    st.title("تواصل مع عامر بوخدادة")
-    st.success("الهاتف/واتساب: 0691897126")
-    st.markdown("[اضغط هنا للمحادثة المباشرة](https://wa.me/212691897126)")
+# القسم 4: صفقات Supabase
+elif app_mode == "📋 إدارة صفقات Supabase":
+    st.title("📋 Supabase Manager")
+    # (هنا كود عرض وإضافة البيانات لـ Supabase الذي وضعناه سابقاً)
+
+# القسم 5: إضافة إعلان يدوي
+elif app_mode == "➕ إضافة إعلان يدوي":
+    st.title("➕ إضافة عرض جديد")
+    # (كود فورم الإضافة الذي كان في الملف الأول)
+
+# القسم 6: الخدمات
+elif app_mode == "🛠️ خدماتنا":
+    st.title("🛠️ خدماتنا الرقمية")
