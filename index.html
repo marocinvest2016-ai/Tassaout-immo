@@ -47,6 +47,7 @@
         .badge { background: #22c55e; color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
         .prop-title { color: #4ade80; font-size: 17px; margin: 5px 0; }
         .prop-location { font-size: 13px; color: #cbd5e1; margin: 3px 0; }
+        .prop-phone { font-size: 13px; color: #a3e635; margin: 3px 0; font-weight: bold; direction: ltr; text-align: right; }
         .prop-desc { font-size: 12px; color: #94a3b8; margin: 6px 0; line-height: 1.4; }
         .prop-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #14532d; padding-top: 8px; margin-top: 8px; }
         .prop-price { font-size: 15px; font-weight: bold; color: #4ade80; }
@@ -93,12 +94,15 @@
                     <input type="text" id="location" placeholder="مثال: قلعة السراغنة / مراكش" required>
                 </div>
                 <div class="form-group">
+                    <label>رقم الهاتف (للتواصل عبر واتساب)</label>
+                    <input type="tel" id="phone" placeholder="مثال: +212600000000" required dir="ltr" style="text-align: right;">
+                </div>
+                <div class="form-group">
                     <label>السعر أو التكلفة</label>
                     <input type="text" id="price" placeholder="مثال: 1,200,000 DH" required>
                 </div>
                 <div class="form-group">
                     <label>تحميل الصور (عدد غير محدود من الاستوديو)</label>
-                    <!-- رفع القيود العددية والسماح بتحميل عدد غير محدود من الصور مع منع الكاميرا المباشرة -->
                     <input type="file" id="imagesInput" accept="image/png, image/jpeg, image/webp" multiple required>
                 </div>
                 <div class="form-group">
@@ -179,6 +183,7 @@
                 title: document.getElementById("title").value,
                 category: document.getElementById("category").value,
                 location: document.getElementById("location").value,
+                phone: document.getElementById("phone").value,
                 price: document.getElementById("price").value,
                 description: document.getElementById("description").value,
                 images: imagesArray
@@ -216,6 +221,11 @@
                     imagesHTML += '</div>';
                 }
 
+                // تنظيف رقم الهاتف وإعداد رابط الواتساب المخصص مع رسالة تلقائية
+                let cleanPhone = ad.phone ? ad.phone.replace(/[^0-9+]/g, '') : '';
+                let waMessage = encodeURIComponent(`مرحباً، أنا مهتم بالإعلان التالي:\n*${ad.title}*\nالسعر: ${ad.price}\nالموقع: ${ad.location}`);
+                let whatsappLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMessage}` : `https://wa.me/?text=${waMessage}`;
+
                 const card = document.createElement("div");
                 card.className = "prop-card";
                 card.innerHTML = `
@@ -226,11 +236,12 @@
                         <span class="badge">${ad.category}</span>
                         <h3 class="prop-title">${ad.title}</h3>
                         <p class="prop-location">📍 ${ad.location}</p>
+                        <p class="prop-phone">📞 ${ad.phone || 'غير متوفر'}</p>
                         <p class="prop-desc">${ad.description}</p>
                     </div>
                     <div class="prop-footer">
                         <span class="prop-price">${ad.price}</span>
-                        <a href="https://wa.me/" target="_blank" class="contact-btn">تواصل معنا</a>
+                        <a href="${whatsappLink}" target="_blank" class="contact-btn">تواصل عبر واتساب</a>
                     </div>
                 `;
                 container.appendChild(card);
