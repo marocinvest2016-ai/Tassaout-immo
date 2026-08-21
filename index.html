@@ -3,41 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tassaout Immo & Media - الوكيل الذكي + 11 وكيل</title>
+    <title>TASSAOUT GROUP - V8.1</title>
     <style>
-        body { background-color: #062314; color: #f8fafc; font-family: Tahoma, sans-serif; padding: 20px; margin: 0; }
-        header { text-align: center; margin-bottom: 25px; background: linear-gradient(135deg, #0f3d24, #800020); padding: 20px; border-radius: 12px; }
-        header h1 { color: #D4AF37; margin-bottom: 5px; }
-        header p { color: #a3e635; font-size: 14px; }
-        .omega-badge { background: linear-gradient(45deg, #800020, #D4AF37); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #062314; color: #f8fafc; font-family: Tahoma, Arial; }
+        header { text-align: center; padding: 20px; background: linear-gradient(135deg, #0f3d24, #800020); position: sticky; top: 0; z-index: 100; }
+        h1 { color: #D4AF37; }
+       .omega-badge { background: linear-gradient(45deg, #800020, #D4AF37); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+       .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
+       .btn { background: #22c55e; color: #000; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 5px; font-size: 14px; width: 100%; }
+       .btn:hover { background: #4ade80; }
+       .btn-gold { background: #D4AF37; }
+       .btn-red { background: #ef4444; color: #fff; width: auto; }
+       .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+       .card { background: #0f3d24; border: 1px solid #22c55e; border-radius: 12px; padding: 15px; width: 310px; }
+       .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; }
+       .agent-card { border-color: #D4AF37; background: #1a2e1a; text-align: center; }
+       .agent-card.active { box-shadow: 0 0 20px #4ade80; }
+       .ai-box { background: #03160b; padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #D4AF37; }
+       .ai-log { background: #000; color: #4ade80; padding: 15px; border-radius: 8px; height: 200px; overflow-y: auto; font-size: 12px; }
+       .login-box { background: #03160b; border: 2px solid #D4AF37; padding: 30px; border-radius: 12px; max-width: 400px; margin: 50px auto; }
+       .admin-panel { display: none; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #22c55e; background: #062314; color: #fff; }
+       .whatsapp-float { position: fixed; bottom: 25px; left: 25px; background: #25D366; color: #fff; padding: 18px; border-radius: 50%; font-size: 28px; text-decoration: none; z-index: 999; }
+       .filter-btn { background-color: #0f3d24; color: #4ade80; border: 1px solid #22c55e; padding: 8px 16px; border-radius: 20px; cursor: pointer; margin: 5px; }
+       .filter-btn.active { background-color: #22c55e; color: #000; }
+    </style>
+</head>
+<body>
 
-        .main-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1400px; margin: 0 auto 30px auto; }
-        
-        .admin-panel { background-color: #0f3d24; border: 2px solid #22c55e; border-radius: 12px; padding: 20px; flex: 1; min-width: 320px; max-width: 550px; }
-        .agent-panel { background-color: #03160b; border: 2px solid #16a34a; border-radius: 12px; padding: 20px; flex: 1; min-width: 320px; max-width: 550px; display: flex; flex-direction: column; }
-        
-        .chat-history { background-color: #062314; border: 1px solid #14532d; border-radius: 8px; height: 230px; overflow-y: auto; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
-        .chat-msg { padding: 8px 12px; border-radius: 8px; max-width: 85%; line-height: 1.4; }
-        .agent-msg { background-color: #14532d; color: #4ade80; align-self: flex-start; border-right: 3px solid #22c55e; }
-        .user-msg { background-color: #0f3d24; color: #f8fafc; align-self: flex-end; border-left: 3px solid #16a34a; }
+<header>
+    <h1>TASSAOUT GROUP <span class="omega-badge">V8.1 ADMIN</span></h1>
+    <button id="logoutBtn" class="btn-red" onclick="logout()" style="display:none;">تسجيل الخروج</button>
+</header>
 
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #4ade80; font-weight: bold; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #22c55e; background-color: #062314; color: #fff; box-sizing: border-box; font-size: 14px; }
-        
-        .btn { background-color: #22c55e; color: #000; padding: 10px; border: none; border-radius: 8px; width: 100%; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn:hover { background-color: #16a34a; }
-        .btn-gold { background: #D4AF37; }
-        .btn-red { background: #ef4444; color: #fff; }
+<div class="container">
+    <!-- صندوق تسجيل الدخول -->
+    <div id="loginBox" class="login-box">
+        <h3>تسجيل دخول المدير</h3>
+        <input type="email" id="email" placeholder="الإيميل">
+        <input type="password" id="password" placeholder="كلمة السر">
+        <button class="btn-gold" onclick="login()">دخول</button>
+        <p id="loginError" style="color:red;"></p>
+    </div>
 
-        .filter-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .filter-btn { background-color: #0f3d24; color: #4ade80; border: 1px solid #22c55e; padding: 8px 16px; border-radius: 20px; cursor: pointer; }
-        .filter-btn.active { background-color: #22c55e; color: #000; font-weight: bold; }
+    <!-- لوحة المدير -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="ai-box">
+            <h3>🤖 غرفة العمليات - 11 وكيل</h3>
+            <button class="btn-gold" onclick="startAllAgents()">🚀 تشغيل النظام</button>
+            <button class="btn-red" onclick="stopAllAgents()">⏸️ إيقاف</button>
+            <div class="ai-log" id="aiLog">> مرحبا سيدي المدير</div>
+            <h4>فريق الوكلاء</h4>
+            <div id="agentsGrid" class="grid"></div>
+        </div>
 
-        .listings-grid { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1400px; margin: 0 auto; }
-        .prop-card { border: 1px solid #22c55e; background-color: #0f3d24; border-radius: 12px; width: 320px; padding: 15px; }
-        .card-images { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 10px; }
-        .card-images img { width: 100px; height: 75px; object-fit: cover; border-radius: 6px; border: 1px solid #22c55e; cursor: pointer; }
-        
-        .badge { background: #22c55e; color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
-        .
+        <h2>إضافة عرض جديد</h2>
+        <form id="adForm">
+            <select id="category" required>
+                <option value="">اختر المجال</option>
+                <option>العقاري الفلاحي</option><option>بيع الجرارات الزراعية</option>
+                <option>بيع الآليات الفلاحية</option><option>الهندسة المعمارية</option>
+                <option>الهندسة الرقمية والتصوير</option><option>الأنظمة والبرمجيات</option>
+            </select>
+            <input id="title" placeholder="العنوان" required>
+            <input id="location" placeholder="الموقع" required>
+            <input id="price" placeholder="الثمن" required>
+            <input id="phone" placeholder="212691897126" required>
+            <input type="file" id="img" accept="image/*" required>
+            <textarea id="desc" placeholder="الوصف"></textarea>
+            <button type="submit" class="btn">نشر العرض</button>
+        </form>
+
+        <div style="margin:20px 0;">
+            <button class="filter-btn active" onclick="filterAds('all', this)">الكل</button>
+            <button class="filter-btn" onclick="filterAds('العقاري الفلاحي', this)">العقاري</button>
+            <button class="filter-btn" onclick="filterAds('بيع الجرارات الزراعية', this)">الجرارات</button>
+        </div>
+
+        <h2>العروض <span id="counter"></span></h2>
+        <div id="adsGrid" class="grid"></div>
+    </div>
+</div>
+
+<a href="https://wa.me/212691897126" class="whatsapp-float" target="_blank">💬</a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // 1. حط المفاتيح ديالك هنا
+    const SUPABASE_URL = 'YOUR_URL'
+    const SUPABASE_KEY = 'YOUR_KEY'
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+    const BUCKET = 'ads-images'
+    let ads = []; let intervals = []; let running = false;
+
+    const agentsList = [
+        {id:1, name:"وكيل العقار"}, {id:2, name:"وكيل التجارة"}, {id:3, name:"وكيل الجرارات"},
+        {id:4, name:"وكيل الآليات"}, {id:5, name:"وكيل السيارات"}, {id:6, name:"المهندس المعماري"},
+        {id:7, name:"المهندس الصناعي"}, {id:8, name:"المهندس الميكانيكي"}, {id:9, name:"وكيل الكاميرا"},
+        {id:10, name:"مهندس الديكور"}, {id:11, name:"خبير الصفقات"}
+    ];
+
+    // 2. تسجيل الدخول
+    db.auth.getSession().then(({ data: { session }}) => { if(session){ showAdmin(); loadAds(); } })
+    async function login(){
+        const { error } = await db.auth.signInWithPassword({ email: email.value, password: password.value })
+        if(error){ loginError.innerText = "خطأ فالإيميل أو كلمة السر"; } else{ showAdmin(); loadAds(); }
+    }
+    async function logout(){ await db.auth.signOut(); location.reload(); }
+    function showAdmin(){ loginBox.style.display = 'none'; adminPanel.style.display = 'block'; logoutBtn.style.display = 'inline-block'; renderAgents(); }
+
+    function log(msg){ aiLog.innerHTML += `<br>> ${msg}`; }
+
+    // 3. الوكلاء
+    function startAllAgents(){ running=true; log("11 وكيل بداو ✅"); agentsList.forEach(a=>intervals.push(setInterval(()=>agentWork(a),3000+a.id*200))); }
+    function stopAllAgents(){ running=false; intervals.forEach(clearInterval); log("النظام توقف"); }
+    function agentWork(a){ if(running){ document.getElementById('agent'+a.id)?.classList.add('active'); log(`${a.name}: خدام`); setTimeout(()=>document.getElementById('agent'+a.id)?.classList.remove('active'),1000); } }
+    function renderAgents(){ let html=''; agentsList.forEach(a=>html+=`<div class="card agent-card" id="agent${a.id}"><h4>${a.name}</h4><p>🟢 خدام</p></div>`); agentsGrid.innerHTML=html; }
+
+    // 4. نشر العرض
+    document.getElementById('adForm').onsubmit = async function(e){
+        e.preventDefault();
+        const file = img.files[0]; const fileName = Date.now() + '-' + file.name;
+        await db.storage.from(BUCKET).upload(fileName, file);
+        const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(fileName);
+
+        await db.from('ads').insert([{
+            category: category.value, title: title.value, location: location.value,
+            price: price.value, phone: phone.value, description: desc.value, image_url: urlData.publicUrl
+        }]);
+        alert("تم النشر ✅"); adForm.reset(); loadAds();
+    }
+
+    // 5. تحميل وعرض
+    async function loadAds() {
+        let { data } = await db.from('ads').select('*').order('id', { ascending: false });
+        ads = data || []; renderAds(ads);
+    }
+    function renderAds(list){
+        adsGrid.innerHTML = ''; counter.innerText = `(${list.length})`;
+        list.forEach((ad) => {
+            adsGrid.innerHTML += `<div class="card"><img src="${ad.image_url}"><span class="omega-badge">${ad.category}</span><h4>${ad.title}</h4><p>📍 ${ad.location}</p><p><b>${ad.price}</b></p><a class="btn" href="https://wa.me/${ad.phone}" target="_blank">واتساب</a><button class="btn-red" onclick="deleteAd(${ad.id})">حذف</button></div>`;
+        });
+    }
+    async function deleteAd(id){ if(confirm("متأكد؟")){ await db.from('ads').delete().eq('id', id); loadAds(); } }
+    function filterAds(cat, btn){ document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderAds(cat==='all'?ads:ads.filter(ad=>ad.category===cat)); }
+</script>
+</body>
+</html>
