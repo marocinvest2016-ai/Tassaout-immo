@@ -3,22 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tassaout Immo & Media - الوكيل الذكي وإدارة العروض</title>
+    <title>Tassaout Immo & Media - الوكيل الذكي + 11 وكيل</title>
     <style>
         body { background-color: #062314; color: #f8fafc; font-family: Tahoma, sans-serif; padding: 20px; margin: 0; }
-        header { text-align: center; margin-bottom: 25px; }
-        header h1 { color: #4ade80; margin-bottom: 5px; }
+        header { text-align: center; margin-bottom: 25px; background: linear-gradient(135deg, #0f3d24, #800020); padding: 20px; border-radius: 12px; }
+        header h1 { color: #D4AF37; margin-bottom: 5px; }
         header p { color: #a3e635; font-size: 14px; }
+        .omega-badge { background: linear-gradient(45deg, #800020, #D4AF37); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
 
-        .main-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: 0 auto 30px auto; }
+        .main-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1400px; margin: 0 auto 30px auto; }
         
-        /* لوحة الإدارة وإضافة العروض */
-        .admin-panel { background-color: #0f3d24; border: 2px solid #22c55e; border-radius: 12px; padding: 20px; flex: 1; min-width: 300px; max-width: 550px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .admin-panel h3 { color: #4ade80; text-align: center; margin-top: 0; }
-        
-        /* صندوق التفاعل مع الوكيل الذكي */
-        .agent-panel { background-color: #03160b; border: 2px solid #16a34a; border-radius: 12px; padding: 20px; flex: 1; min-width: 300px; max-width: 550px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .agent-panel h3 { color: #4ade80; text-align: center; margin-top: 0; }
+        .admin-panel { background-color: #0f3d24; border: 2px solid #22c55e; border-radius: 12px; padding: 20px; flex: 1; min-width: 320px; max-width: 550px; }
+        .agent-panel { background-color: #03160b; border: 2px solid #16a34a; border-radius: 12px; padding: 20px; flex: 1; min-width: 320px; max-width: 550px; display: flex; flex-direction: column; }
         
         .chat-history { background-color: #062314; border: 1px solid #14532d; border-radius: 8px; height: 230px; overflow-y: auto; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
         .chat-msg { padding: 8px 12px; border-radius: 8px; max-width: 85%; line-height: 1.4; }
@@ -27,303 +23,21 @@
 
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; margin-bottom: 5px; color: #4ade80; font-weight: bold; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #22c55e; background-color: #062314; color: #fff; box-sizing: border-box; font-size: 14px; outline: none; }
+        input, select, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #22c55e; background-color: #062314; color: #fff; box-sizing: border-box; font-size: 14px; }
         
-        .btn { background-color: #22c55e; color: #000; padding: 10px; border: none; border-radius: 8px; width: 100%; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; margin-top: 8px; transition: 0.2s; }
+        .btn { background-color: #22c55e; color: #000; padding: 10px; border: none; border-radius: 8px; width: 100%; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn:hover { background-color: #16a34a; }
+        .btn-gold { background: #D4AF37; }
+        .btn-red { background: #ef4444; color: #fff; }
 
-        /* شريط الفلترة */
         .filter-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .filter-btn { background-color: #0f3d24; color: #4ade80; border: 1px solid #22c55e; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
-        .filter-btn:hover, .filter-btn.active { background-color: #22c55e; color: #000; font-weight: bold; }
+        .filter-btn { background-color: #0f3d24; color: #4ade80; border: 1px solid #22c55e; padding: 8px 16px; border-radius: 20px; cursor: pointer; }
+        .filter-btn.active { background-color: #22c55e; color: #000; font-weight: bold; }
 
-        /* شبكة العروض */
-        .listings-grid { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        .prop-card { border: 1px solid #22c55e; background-color: #0f3d24; color: #fff; border-radius: 12px; width: 320px; padding: 15px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .listings-grid { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1400px; margin: 0 auto; }
+        .prop-card { border: 1px solid #22c55e; background-color: #0f3d24; border-radius: 12px; width: 320px; padding: 15px; }
+        .card-images { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 10px; }
+        .card-images img { width: 100px; height: 75px; object-fit: cover; border-radius: 6px; border: 1px solid #22c55e; cursor: pointer; }
         
-        .card-images { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 10px; padding-bottom: 5px; }
-        .card-images img { width: 100px; height: 75px; object-fit: cover; border-radius: 6px; border: 1px solid #22c55e; flex-shrink: 0; cursor: pointer; }
-        
-        .badge { background: #22c55e; color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
-        .prop-title { color: #4ade80; font-size: 17px; margin: 5px 0; }
-        .prop-location { font-size: 13px; color: #cbd5e1; margin: 3px 0; }
-        .prop-phone { font-size: 13px; color: #a3e635; margin: 3px 0; font-weight: bold; direction: ltr; text-align: right; }
-        .prop-desc { font-size: 12px; color: #94a3b8; margin: 6px 0; line-height: 1.4; }
-        .prop-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #14532d; padding-top: 8px; margin-top: 8px; }
-        .prop-price { font-size: 15px; font-weight: bold; color: #4ade80; }
-        .contact-btn { background-color: #16a34a; color: #fff; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; }
-        .delete-card-btn { background: #ef4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; float: left; margin-bottom: 5px; }
-
-        /* Lightbox */
-        #lightbox { display: none; position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
-        #lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; border: 2px solid #22c55e; }
-        #lightbox span { position: absolute; top: 20px; left: 30px; color: #fff; font-size: 35px; cursor: pointer; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>Tassaout Immo & Media</h1>
-        <p>منصة الإعلانات الذكية والخدمات الشاملة - قلعة السراغنة ومراكش</p>
-    </header>
-
-    <div class="main-container">
-        <!-- لوحة إدخال الإعلانات -->
-        <div class="admin-panel">
-            <h3>إضافة عرض أو إعلان جديد</h3>
-            <form id="adForm" onsubmit="addNewAd(event)">
-                <div class="form-group">
-                    <label>عنوان العرض</label>
-                    <input type="text" id="title" placeholder="مثال: أرض فلاحية مجهزة للبيع" required>
-                </div>
-                <div class="form-group">
-                    <label>القطاع أو الفئة</label>
-                    <select id="category" required>
-                        <option value="">اختر الفئة المناسبة</option>
-                        <option value="العقاري الفلاحي">العقاري الفلاحي</option>
-                        <option value="العقاري الصناعي والتجاري">العقاري الصناعي والتجاري</option>
-                        <option value="العقاري المهني والاستثماري">العقاري المهني والاستثماري</option>
-                        <option value="بيع مواد البناء">بيع مواد البناء</option>
-                        <option value="مكتب الدراسات والهندسة">مكتب الدراسات والهندسة</option>
-                        <option value="الهندسة الرقمية والتصوير">الهندسة الرقمية والتصوير</option>
-                        <option value="التسويق العقاري والتجاري">التسويق العقاري والتجاري</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>الموقع</label>
-                    <input type="text" id="location" placeholder="مثال: قلعة السراغنة / مراكش" required>
-                </div>
-                <div class="form-group">
-                    <label>رقم الهاتف (للتواصل عبر واتساب)</label>
-                    <input type="tel" id="phone" placeholder="مثال: +212600000000" required dir="ltr" style="text-align: right;">
-                </div>
-                <div class="form-group">
-                    <label>السعر أو التكلفة</label>
-                    <input type="text" id="price" placeholder="مثال: 1,200,000 DH" required>
-                </div>
-                <div class="form-group">
-                    <label>تحميل الصور (عدد غير محدود من الاستوديو)</label>
-                    <input type="file" id="imagesInput" accept="image/png, image/jpeg, image/webp" multiple required>
-                </div>
-                <div class="form-group">
-                    <label>التفاصيل والوصف</label>
-                    <textarea id="description" rows="2" placeholder="اكتب تفاصيل الإعلان هنا..." required></textarea>
-                </div>
-                <button type="submit" class="btn">نشر العرض فوراً</button>
-            </form>
-        </div>
-
-        <!-- نافذة الوكيل الذكي المتفاعل مع الطلبات -->
-        <div class="agent-panel">
-            <h3>🤖 الوكيل الذكي المتفاعل</h3>
-            <div id="chatHistory" class="chat-history">
-                <div class="chat-msg agent-msg">مرحباً بك! أنا مساعدك الذكي في Tassaout Immo & Media. اسألني عن أي عقار، خدمة، مواد بناء، أو اطلب المساعدة في اختيار العرض المناسب لك بقلعة السراغنة ومراكش.</div>
-            </div>
-            <div style="display: flex; gap: 8px;">
-                <input type="text" id="userInput" placeholder="اكتب طلبك أو استفسارك هنا..." onkeypress="handleKeyPress(event)">
-                <button class="btn" style="width: 80px; margin-top:0;" onclick="sendToAgent()">إرسال</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- أزرار الفلترة حسب القطاع -->
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterAds('all', this)">جميع العروض</button>
-        <button class="filter-btn" onclick="filterAds('العقاري الفلاحي', this)">العقاري الفلاحي</button>
-        <button class="filter-btn" onclick="filterAds('العقاري الصناعي والتجاري', this)">العقاري الصناعي والتجاري</button>
-        <button class="filter-btn" onclick="filterAds('بيع مواد البناء', this)">بيع مواد البناء</button>
-        <button class="filter-btn" onclick="filterAds('الهندسة الرقمية والتصوير', this)">الهندسة الرقمية والتصوير</button>
-        <button class="filter-btn" onclick="filterAds('التسويق العقاري والتجاري', this)">التسويق العقاري والتجاري</button>
-    </div>
-
-    <!-- حاوية العروض -->
-    <div id="adsContainer" class="listings-grid"></div>
-
-    <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()">
-        <span onclick="closeLightbox()">&times;</span>
-        <img id="lightboxImg" src="" alt="صورة مكبرة">
-    </div>
-
-    <script>
-        let adsData = JSON.parse(localStorage.getItem("tassaout_interactive_ads")) || [];
-
-        function saveAndRender() {
-            localStorage.setItem("tassaout_interactive_ads", JSON.stringify(adsData));
-            displayAds(adsData);
-        }
-
-        function addNewAd(event) {
-            event.preventDefault();
-            const imageFiles = document.getElementById("imagesInput").files;
-            
-            let imageUrls = [];
-            let readersFinished = 0;
-
-            if (imageFiles.length === 0) {
-                processAndSave([]);
-                return;
-            }
-
-            for (let i = 0; i < imageFiles.length; i++) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageUrls.push(e.target.result);
-                    readersFinished++;
-                    if (readersFinished === imageFiles.length) {
-                        processAndSave(imageUrls);
-                    }
-                }
-                reader.readAsDataURL(imageFiles[i]);
-            }
-        }
-
-        function processAndSave(imagesArray) {
-            const newAd = {
-                title: document.getElementById("title").value,
-                category: document.getElementById("category").value,
-                location: document.getElementById("location").value,
-                phone: document.getElementById("phone").value,
-                price: document.getElementById("price").value,
-                description: document.getElementById("description").value,
-                images: imagesArray
-            };
-
-            adsData.unshift(newAd);
-            saveAndRender();
-            document.getElementById("adForm").reset();
-            alert("تم نشر العرض بنجاح مع الصور غير المحدودة!");
-        }
-
-        function deleteAd(index) {
-            if (confirm("هل أنت متأكد من حذف هذا العرض؟")) {
-                adsData.splice(index, 1);
-                saveAndRender();
-            }
-        }
-
-        function displayAds(ads) {
-            const container = document.getElementById("adsContainer");
-            container.innerHTML = "";
-
-            if (ads.length === 0) {
-                container.innerHTML = "<p style='color: #a3e635; text-align: center; width: 100%;'>لا توجد عروض مضافة حالياً. قم بإضافة إعلانك الأول.</p>";
-                return;
-            }
-
-            ads.forEach((ad, index) => {
-                let imagesHTML = '';
-                if (ad.images && ad.images.length > 0) {
-                    imagesHTML = '<div class="card-images">';
-                    ad.images.forEach(imgSrc => {
-                        imagesHTML += `<img src="${imgSrc}" alt="صورة العرض" onclick="openLightbox('${imgSrc}')">`;
-                    });
-                    imagesHTML += '</div>';
-                }
-
-                // تنظيف رقم الهاتف وإعداد رابط الواتساب المخصص مع رسالة تلقائية
-                let cleanPhone = ad.phone ? ad.phone.replace(/[^0-9+]/g, '') : '';
-                let waMessage = encodeURIComponent(`مرحباً، أنا مهتم بالإعلان التالي:\n*${ad.title}*\nالسعر: ${ad.price}\nالموقع: ${ad.location}`);
-                let whatsappLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMessage}` : `https://wa.me/?text=${waMessage}`;
-
-                const card = document.createElement("div");
-                card.className = "prop-card";
-                card.innerHTML = `
-                    <div>
-                        <button class="delete-card-btn" onclick="deleteAd(${index})">حذف</button>
-                        <div style="clear: both;"></div>
-                        ${imagesHTML}
-                        <span class="badge">${ad.category}</span>
-                        <h3 class="prop-title">${ad.title}</h3>
-                        <p class="prop-location">📍 ${ad.location}</p>
-                        <p class="prop-phone">📞 ${ad.phone || 'غير متوفر'}</p>
-                        <p class="prop-desc">${ad.description}</p>
-                    </div>
-                    <div class="prop-footer">
-                        <span class="prop-price">${ad.price}</span>
-                        <a href="${whatsappLink}" target="_blank" class="contact-btn">تواصل عبر واتساب</a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function filterAds(category, buttonElement) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
-
-            if (category === 'all') {
-                displayAds(adsData);
-            } else {
-                const filtered = adsData.filter(ad => ad.category === category);
-                displayAds(filtered);
-            }
-        }
-
-        /* منطق الوكيل الذكي للتفاعل مع الطلبات */
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendToAgent();
-            }
-        }
-
-        function sendToAgent() {
-            const inputField = document.getElementById("userInput");
-            const query = inputField.value.trim();
-            if (!query) return;
-
-            appendChat(query, 'user-msg');
-            inputField.value = "";
-
-            setTimeout(() => {
-                let response = generateAgentResponse(query);
-                appendChat(response, 'agent-msg');
-            }, 500);
-        }
-
-        function appendChat(text, className) {
-            const chatHistory = document.getElementById("chatHistory");
-            const msgDiv = document.createElement("div");
-            msgDiv.className = `chat-msg ${className}`;
-            msgDiv.innerText = text;
-            chatHistory.appendChild(msgDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
-
-        function generateAgentResponse(query) {
-            const q = query.toLowerCase();
-            
-            if (q.includes('أرض') || q.includes('فلاحية') || q.includes('عقار')) {
-                const results = adsData.filter(ad => ad.category.includes('العقاري') || ad.title.includes('أرض') || ad.description.includes('أرض'));
-                if (results.length > 0) {
-                    return `وجدت ${results.length} عرض عقاري مطابق لطلبك. أحدثها: "${results[0].title}" بسعر ${results[0].price} في ${results[0].location}.`;
-                }
-                return "عذراً، لا توجد عروض عقارية مطابقة حالياً، يمكنك إضافة عرض جديد عبر اللوحة بجانبك!";
-            } else if (q.includes('بناء') || q.includes('إسمنت') || q.includes('حديد') || q.includes('مواد')) {
-                const results = adsData.filter(ad => ad.category.includes('مواد البناء') || ad.title.includes('بناء'));
-                if (results.length > 0) {
-                    return `متوفر لدينا قسم مواد البناء: "${results[0].title}" - ${results[0].description}.`;
-                }
-                return "يمكننا توفير كافة مواد البناء بالجملة والتقسيط بجهة مراكش آسفي حسب طلبك.";
-            } else if (q.includes('مراكش') || q.includes('السراغنة')) {
-                return `نحن نغطي مناطق قلعة السراغنة ومراكش بشكل أساسي في مجالات العقارات، مواد البناء، والهندسة الرقمية.`;
-            } else {
-                return "يسعدنا تواصلك! يمكنك تصفح العروض الحالية في الأسفل أو التواصل معنا مباشرة عبر زر الواتساب في أي إعلان للتفاصيل.";
-            }
-        }
-
-        function openLightbox(imgSrc) {
-            const lightbox = document.getElementById("lightbox");
-            const lightboxImg = document.getElementById("lightboxImg");
-            lightboxImg.src = imgSrc;
-            lightbox.style.display = "flex";
-        }
-
-        function closeLightbox() {
-            document.getElementById("lightbox").style.display = "none";
-        }
-
-        window.onload = () => displayAds(adsData);
-    </script>
-</body>
-</html>
+        .badge { background: #22c55e; color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .
