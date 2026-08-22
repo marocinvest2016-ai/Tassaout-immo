@@ -3,67 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASSAOUT GROUP - V8.1</title>
+    <title>TASSAOUT GROUP V8.1 | Sraghna Ferraille</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #062314; color: #f8fafc; font-family: Tahoma, Arial; }
-        header { text-align: center; padding: 20px; background: linear-gradient(135deg, #0f3d24, #800020); position: sticky; top: 0; z-index: 100; }
-        h1 { color: #D4AF37; }
-       .omega-badge { background: linear-gradient(45deg, #800020, #D4AF37); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-       .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
-       .btn { background: #22c55e; color: #000; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 5px; font-size: 14px; width: 100%; }
-       .btn:hover { background: #4ade80; }
-       .btn-gold { background: #D4AF37; }
-       .btn-red { background: #ef4444; color: #fff; width: auto; }
-       .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-       .card { background: #0f3d24; border: 1px solid #22c55e; border-radius: 12px; padding: 15px; width: 310px; }
-       .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; }
-       .agent-card { border-color: #D4AF37; background: #1a2e1a; text-align: center; }
-       .agent-card.active { box-shadow: 0 0 20px #4ade80; }
-       .ai-box { background: #03160b; padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #D4AF37; }
-       .ai-log { background: #000; color: #4ade80; padding: 15px; border-radius: 8px; height: 200px; overflow-y: auto; font-size: 12px; }
-       .admin-panel { display: block; } /* تبدل من none ل block */
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #22c55e; background: #062314; color: #fff; }
-       .whatsapp-float { position: fixed; bottom: 25px; left: 25px; background: #25D366; color: #fff; padding: 18px; border-radius: 50%; font-size: 28px; text-decoration: none; z-index: 999; }
-       .filter-btn { background-color: #0f3d24; color: #4ade80; border: 1px solid #22c55e; padding: 8px 16px; border-radius: 20px; cursor: pointer; margin: 5px; }
-       .filter-btn.active { background-color: #22c55e; color: #000; }
+        :root {
+            --primary-bg: #062314;
+            --admin-accent: #D4AF37;
+            --ferraille-orange: #ff6600;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --dark-card: #0f3d24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--primary-bg); color: #f8fafc; overflow-x: hidden; }
+
+        /* التنسيقات العامة للهيدر */
+        header { 
+            text-align: center; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #0f3d24, #800020); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        header h1 { color: var(--admin-accent); font-size: 1.5rem; }
+        .omega-badge { background: linear-gradient(45deg, #800020, var(--admin-accent)); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+        /* لوحة التحكم - الإدارة */
+        .admin-section { background: rgba(15, 61, 36, 0.5); border-radius: 20px; padding: 25px; margin-bottom: 40px; border: 1px solid var(--admin-accent); }
+        .ai-box { background: #03160b; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .ai-log { background: #000; color: var(--success); padding: 15px; border-radius: 8px; height: 120px; overflow-y: auto; font-family: monospace; font-size: 12px; border: 1px solid #22c55e; }
+        
+        /* فريق الوكلاء */
+        .agents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px; }
+        .agent-card { background: #1a2e1a; border: 1px solid #333; padding: 10px; border-radius: 10px; text-align: center; transition: 0.3s; }
+        .agent-card.active { border-color: var(--success); box-shadow: 0 0 10px var(--success); }
+        .agent-status { width: 10px; height: 10px; background: #555; border-radius: 50%; display: inline-block; margin-left: 5px; }
+        .active .agent-status { background: var(--success); box-shadow: 0 0 5px var(--success); }
+
+        /* نموذج الإضافة */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid var(--success); background: #062314; color: #fff; }
+        .btn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-gold { background: var(--admin-accent); color: #000; }
+        .btn-green { background: var(--success); color: #000; width: 100%; }
+        .btn-red { background: var(--danger); color: #fff; }
+
+        /* قسم سراغنة فيراي (الواجهة العامة) */
+        .ferraille-hero { 
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1558444479-c84851830060?auto=format&fit=crop&q=80');
+            background-size: cover; background-position: center;
+            padding: 80px 20px; border-radius: 30px; text-align: center; border: 2px solid var(--ferraille-orange); margin: 40px 0;
+        }
+        .ferraille-hero h2 { font-size: 2.5rem; color: var(--ferraille-orange); margin-bottom: 20px; }
+        .ferraille-hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 30px; color: #ddd; }
+
+        /* شبكة الخدمات */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .service-card { background: #111; padding: 30px; border-radius: 15px; border-top: 5px solid var(--ferraille-orange); transition: 0.3s; text-align: center; }
+        .service-card:hover { transform: translateY(-10px); background: #1a1a1a; }
+        .service-card h3 { color: var(--ferraille-orange); margin-bottom: 15px; }
+
+        /* شريط الواتساب */
+        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; text-decoration: none; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid #333; margin-top: 50px; color: #888; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>TASSAOUT GROUP <span class="omega-badge">V8.1 ADMIN</span></h1>
+    <h1>TASSAOUT GROUP <span class="omega-badge">V8.1 OMEGA ADMIN</span></h1>
 </header>
 
 <div class="container">
-    <!-- لوحة المدير مباشرة -->
-    <div id="adminPanel" class="admin-panel">
+    
+    <!-- لوحة التحكم الإدارية -->
+    <section class="admin-section" id="adminPanel">
         <div class="ai-box">
-            <h3>🤖 غرفة العمليات - 11 وكيل</h3>
-            <button class="btn-gold" onclick="startAllAgents()">🚀 تشغيل النظام</button>
-            <button class="btn-red" onclick="stopAllAgents()">⏸️ إيقاف</button>
-            <div class="ai-log" id="aiLog">> مرحبا سيدي المدير</div>
-            <h4>فريق الوكلاء</h4>
-            <div id="agentsGrid" class="grid"></div>
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3>🤖 غرفة العمليات المركزية</h3>
+                <div>
+                    <button class="btn btn-gold" onclick="startSystem()">🚀 تشغيل الوكلاء</button>
+                    <button class="btn btn-red" onclick="stopSystem()">⏸️ إيقاف</button>
+                </div>
+            </div>
+            <div class="ai-log" id="aiLog">> نظام تساوت جاهز.. في انتظار الأوامر.</div>
+            
+            <div class="agents-grid" id="agentsGrid">
+                <!-- الوكلاء سيتم توليدهم بواسطة JS -->
+            </div>
         </div>
 
-        <h2>إضافة عرض جديد</h2>
-        <form id="adForm">
-            <select id="category" required>
-                <option value="">اختر المجال</option>
-                <option>العقاري الفلاحي</option><option>بيع الجرارات الزراعية</option>
-                <option>بيع الآليات الفلاحية</option><option>الهندسة المعمارية</option>
-                <option>الهندسة الرقمية والتصوير</option><option>الأنظمة والبرمجيات</option>
-            </select>
-            <input id="title" placeholder="العنوان" required>
-            <input id="location" placeholder="الموقع" required>
-            <input id="price" placeholder="الثمن" required>
-            <input id="phone" placeholder="212691897126" required>
-            <input type="file" id="img" accept="image/*" required>
-            <textarea id="desc" placeholder="الوصف"></textarea>
-            <button type="submit" class="btn">نشر العرض</button>
+        <h3 style="margin-bottom: 15px; color: var(--admin-accent);">➕ إضافة عرض جديد للمنصة</h3>
+        <form id="adForm" onsubmit="event.preventDefault(); publishAd();">
+            <div class="form-grid">
+                <select id="category" required>
+                    <option value="">اختر المجال</option>
+                    <option>خردة ومتلاشيات</option>
+                    <option>عقاري فلاحي</option>
+                    <option>آليات زراعية</option>
+                </select>
+                <input type="text" id="title" placeholder="عنوان العرض" required>
+                <input type="text" id="price" placeholder="الثمن" required>
+                <input type="text" id="location" placeholder="الموقع (مثال: قلعة السراغنة)" required>
+            </div>
+            <textarea id="desc" placeholder="تفاصيل العرض..."></textarea>
+            <button type="submit" class="btn btn-green">نشر العرض فوراً</button>
         </form>
+    </section>
 
-        <div style="margin:20px 0;">
-            <button class="filter-btn active" onclick="filterAds('all', this)">الكل</button>
-           
+    <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+    <!-- واجهة سراغنة فيراي للزبائن -->
+    <section id="publicView">
+        <div class="ferraille-hero">
+            <h2>SRAGHNA FERRAILLE | سراغنة فيراي</h2>
+            <p>نحن المتخصصون في شراء كافة أنواع الخردة والمتلاشيات بالجملة في جهة مراكش-آسفي. نحول متلاشياتكم إلى سيولة بأفضل أسعار السوق 2026.</p>
+            <div style="display:flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="tel:0691897126" class="btn" style="background:var(--ferraille-orange); color:#000; text-decoration:none;">📞 اتصل للتقييم الفوري</a>
+                <a href="https://wa.me/212691897126" class="btn" style="background:#25D366; color:#fff; text-decoration:none;">💬 أرسل صور الصور واتساب</a>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 30px; color: var(--ferraille-orange);">ماذا نشتري منكم؟</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>🚜 متلاشيات الضيعات</h3>
+                <p>أنابيب الري، محركات الآبار، الجرارات القديمة، والهياكل المعدنية للبيوت المغطاة.</p>
+            </div>
+            <div class="service-card">
+                <h3>🏗️ خردة ورشات البناء</h3>
+                <p>حديد الخرسانة، السقالات، الرافعات المتعطلة، وبقايا الهياكل الحديدية للمصانع.</p>
+            </div>
+            <div class="service-card">
+                <h3>🔩 المعادن بالجملة</h3>
+                <p>النحاس، الألومنيوم، الإينوكس، البطاريات، والكابلات الكهربائية بجميع أنواعها.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; background: #111; padding: 40px; border-radius: 20px; text-align: center;">
+            <h2 style="color: var(--success); margin-bottom: 20px;">لماذا تختارنا؟</h2>
+            <div class="form-grid">
+                <div style="padding: 15px;">✔️ وزن حقيقي مئة بالمئة</div>
+                <div style="padding: 15px;">✔️ النقل والشحن علينا</div>
+                <div style="padding: 15px;">✔️ دفع نقدي (Cash) فوري</div>
+                <div style="padding: 15px;">✔️ تغطية شاملة لكل الإقليم</div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- زر واتساب العائم -->
+<a href="https://wa.me/212691897126" class="whatsapp-float" target="_blank">
+    <svg viewBox="0 0 32 32" width="35" height="35" fill="currentColor"><path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.733 5.479 2.022 7.781l-2.022 7.219 7.391-1.94c2.512 1.3 5.372 2.04 8.609 2.04 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 26c-2.459 0-4.757-0.647-6.745-1.776l-0.484-0.273-4.375 1.147 1.171-4.175-0.3-0.476c-1.259-2.001-1.986-4.364-1.986-6.897 0-7.168 5.832-13 13-13s13 5.832 13 13-5.832 13-13 13zM22.511 18.57c-0.359-0.18-2.122-1.047-2.452-1.167s-0.569-0.18-0.809 0.18c-0.24 0.36-0.929 1.167-1.139 1.407s-0.42 0.27-0.779 0.090c-0.359-0.18-1.516-0.559-2.887-1.782-1.066-0.951-1.786-2.126-1.996-2.486s-0.023-0.555 0.157-0.734c0.162-0.161 0.359-0.42 0.539-0.63s0.24-0.36 0.359-0.6c0.12-0.24 0.060-0.45-0.030-0.63s-0.809-1.947-1.109-2.667c-0.292-0.701-0.589-0.606-0.809-0.617s-0.45-0.013-0.689-0.013c-0.24 0-0.629 0.090-0.959 0.45s-1.259 1.23-1.259 2.999 1.289 3.478 1.469 3.718c0.18 0.24 2.537 3.875 6.146 5.434 0.858 0.371 1.528 0.592 2.050 0.758 0.861 0.274 1.645 0.235 2.264 0.143 0.69-0.103 2.122-0.867 2.422-1.706s0.3-1.557 0.21-1.706c-0.090-0.15-0.33-0.24-0.689-0.42z"></path></svg>
+</a>
+
+<footer>
+    <p>TASSAOUT GROUP V8.1 - الإدارة المركزية والحلول اللوجستية</p>
+    <p>جميع الحقوق محفوظة 2026 &copy; عامر بوخدادة</p>
+</footer>
+
+<script>
+    // برمجة الوكلاء
+    const agentNames = ["أمين", "ياسين", "سارة", "كريم", "مراد", "ليلى", "عمر", "حمزة", "نور", "صلاح", "إدريس"];
+    const agentsGrid = document.getElementById('agentsGrid');
+    const aiLog = document.getElementById('aiLog');
+
+    // إنشاء بطاقات الوكلاء
+    agentNames.forEach(name => {
+        const card = document.createElement('div');
+        card.className = 'agent-card';
+        card.innerHTML = `<span class="agent-status"></span> الوكيل ${name}<br><small>خامل</small>`;
+        agentsGrid.appendChild(card);
+    });
+
+    function startSystem() {
+        const cards = document.querySelectorAll('.agent-card');
+        aiLog.innerHTML = "> جاري استدعاء الوكلاء الـ 11..<br>> تم الربط مع قاعدة بيانات سراغنة فيراي..";
+        
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('active');
+                card.querySelector('small').innerText = "متصل / يراقب";
+                if(index === 10) aiLog.innerHTML += "<br>> النظام يعمل بكامل طاقته الآن ✅";
+            }, index * 200);
+        });
+    }
+
+    function stopSystem() {
+        const cards = document.querySelectorAll('.agent-card');
+        cards.forEach(card => {
+            card.classList.remove('active');
+            card.querySelector('small').innerText = "خامل";
+        });
+        aiLog.innerHTML = "> تم إيقاف جميع العمليات بنجاح.";
+    }
+
+    function publishAd() {
+        const title = document.getElementById('title').value;
+        aiLog.innerHTML += `<br>> جاري نشر العرض: [${title}] في جميع المنصات التابعة للمجموعة..`;
+        alert('تم إرسال العرض للنشر البرمجي عبر الوكلاء!');
+        document.getElementById('adForm').reset();
+    }
+</script>
+
+</body>
+</html>
