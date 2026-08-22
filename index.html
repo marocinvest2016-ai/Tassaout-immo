@@ -22,8 +22,7 @@
        .agent-card.active { box-shadow: 0 0 20px #4ade80; }
        .ai-box { background: #03160b; padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #D4AF37; }
        .ai-log { background: #000; color: #4ade80; padding: 15px; border-radius: 8px; height: 200px; overflow-y: auto; font-size: 12px; }
-       .login-box { background: #03160b; border: 2px solid #D4AF37; padding: 30px; border-radius: 12px; max-width: 400px; margin: 50px auto; }
-       .admin-panel { display: none; }
+       .admin-panel { display: block; } /* تبدل من none ل block */
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #22c55e; background: #062314; color: #fff; }
        .whatsapp-float { position: fixed; bottom: 25px; left: 25px; background: #25D366; color: #fff; padding: 18px; border-radius: 50%; font-size: 28px; text-decoration: none; z-index: 999; }
        .filter-btn { background-color: #0f3d24; color: #4ade80; border: 1px solid #22c55e; padding: 8px 16px; border-radius: 20px; cursor: pointer; margin: 5px; }
@@ -34,20 +33,10 @@
 
 <header>
     <h1>TASSAOUT GROUP <span class="omega-badge">V8.1 ADMIN</span></h1>
-    <button id="logoutBtn" class="btn-red" onclick="logout()" style="display:none;">تسجيل الخروج</button>
 </header>
 
 <div class="container">
-    <!-- صندوق تسجيل الدخول -->
-    <div id="loginBox" class="login-box">
-        <h3>تسجيل دخول المدير</h3>
-        <input type="email" id="email" placeholder="الإيميل">
-        <input type="password" id="password" placeholder="كلمة السر">
-        <button class="btn-gold" onclick="login()">دخول</button>
-        <p id="loginError" style="color:red;"></p>
-    </div>
-
-    <!-- لوحة المدير -->
+    <!-- لوحة المدير مباشرة -->
     <div id="adminPanel" class="admin-panel">
         <div class="ai-box">
             <h3>🤖 غرفة العمليات - 11 وكيل</h3>
@@ -77,77 +66,4 @@
 
         <div style="margin:20px 0;">
             <button class="filter-btn active" onclick="filterAds('all', this)">الكل</button>
-            <button class="filter-btn" onclick="filterAds('العقاري الفلاحي', this)">العقاري</button>
-            <button class="filter-btn" onclick="filterAds('بيع الجرارات الزراعية', this)">الجرارات</button>
-        </div>
-
-        <h2>العروض <span id="counter"></span></h2>
-        <div id="adsGrid" class="grid"></div>
-    </div>
-</div>
-
-<a href="https://wa.me/212691897126" class="whatsapp-float" target="_blank">💬</a>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    // 1. حط المفاتيح ديالك هنا
-    const SUPABASE_URL = 'YOUR_URL'
-    const SUPABASE_KEY = 'YOUR_KEY'
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-    const BUCKET = 'ads-images'
-    let ads = []; let intervals = []; let running = false;
-
-    const agentsList = [
-        {id:1, name:"وكيل العقار"}, {id:2, name:"وكيل التجارة"}, {id:3, name:"وكيل الجرارات"},
-        {id:4, name:"وكيل الآليات"}, {id:5, name:"وكيل السيارات"}, {id:6, name:"المهندس المعماري"},
-        {id:7, name:"المهندس الصناعي"}, {id:8, name:"المهندس الميكانيكي"}, {id:9, name:"وكيل الكاميرا"},
-        {id:10, name:"مهندس الديكور"}, {id:11, name:"خبير الصفقات"}
-    ];
-
-    // 2. تسجيل الدخول
-    db.auth.getSession().then(({ data: { session }}) => { if(session){ showAdmin(); loadAds(); } })
-    async function login(){
-        const { error } = await db.auth.signInWithPassword({ email: email.value, password: password.value })
-        if(error){ loginError.innerText = "خطأ فالإيميل أو كلمة السر"; } else{ showAdmin(); loadAds(); }
-    }
-    async function logout(){ await db.auth.signOut(); location.reload(); }
-    function showAdmin(){ loginBox.style.display = 'none'; adminPanel.style.display = 'block'; logoutBtn.style.display = 'inline-block'; renderAgents(); }
-
-    function log(msg){ aiLog.innerHTML += `<br>> ${msg}`; }
-
-    // 3. الوكلاء
-    function startAllAgents(){ running=true; log("11 وكيل بداو ✅"); agentsList.forEach(a=>intervals.push(setInterval(()=>agentWork(a),3000+a.id*200))); }
-    function stopAllAgents(){ running=false; intervals.forEach(clearInterval); log("النظام توقف"); }
-    function agentWork(a){ if(running){ document.getElementById('agent'+a.id)?.classList.add('active'); log(`${a.name}: خدام`); setTimeout(()=>document.getElementById('agent'+a.id)?.classList.remove('active'),1000); } }
-    function renderAgents(){ let html=''; agentsList.forEach(a=>html+=`<div class="card agent-card" id="agent${a.id}"><h4>${a.name}</h4><p>🟢 خدام</p></div>`); agentsGrid.innerHTML=html; }
-
-    // 4. نشر العرض
-    document.getElementById('adForm').onsubmit = async function(e){
-        e.preventDefault();
-        const file = img.files[0]; const fileName = Date.now() + '-' + file.name;
-        await db.storage.from(BUCKET).upload(fileName, file);
-        const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(fileName);
-
-        await db.from('ads').insert([{
-            category: category.value, title: title.value, location: location.value,
-            price: price.value, phone: phone.value, description: desc.value, image_url: urlData.publicUrl
-        }]);
-        alert("تم النشر ✅"); adForm.reset(); loadAds();
-    }
-
-    // 5. تحميل وعرض
-    async function loadAds() {
-        let { data } = await db.from('ads').select('*').order('id', { ascending: false });
-        ads = data || []; renderAds(ads);
-    }
-    function renderAds(list){
-        adsGrid.innerHTML = ''; counter.innerText = `(${list.length})`;
-        list.forEach((ad) => {
-            adsGrid.innerHTML += `<div class="card"><img src="${ad.image_url}"><span class="omega-badge">${ad.category}</span><h4>${ad.title}</h4><p>📍 ${ad.location}</p><p><b>${ad.price}</b></p><a class="btn" href="https://wa.me/${ad.phone}" target="_blank">واتساب</a><button class="btn-red" onclick="deleteAd(${ad.id})">حذف</button></div>`;
-        });
-    }
-    async function deleteAd(id){ if(confirm("متأكد؟")){ await db.from('ads').delete().eq('id', id); loadAds(); } }
-    function filterAds(cat, btn){ document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderAds(cat==='all'?ads:ads.filter(ad=>ad.category===cat)); }
-</script>
-</body>
-</html>
+           
